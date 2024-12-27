@@ -1,0 +1,17 @@
+{
+  "name": "software-testing-project-repo",
+  "version": "1.0.0",
+  "description": "- Node.js - Playwright",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.2"
+  }
+}
