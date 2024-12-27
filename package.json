@@ -1,11 +1,8 @@
 {
-  "name": "software-testing-project-repo",
+  "name": "dvica",
   "version": "1.0.0",
-  "description": "- Node.js - Playwright",
+  "description": "",
   "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
   "scripts": {},
   "keywords": [],
   "author": "",
