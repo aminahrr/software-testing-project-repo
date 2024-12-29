@@ -7,7 +7,7 @@ export class ProductPage extends AbstractPage{
 
     // Locators
 
-    productListing = () => this.page.locator('.c-product-grid__thumb').first() // This locator points on the first listting
+    productListing = () => this.page.locator('.c-product-grid__thumb').first() // This locator points on the first listing
     addToCartButton = () => this.page.locator('.ajax_add_to_cart') // Universal add to cart button locator
     productTitle = () => this.page.locator('.c-product-grid__title-inner') // Universal product title locator
   
