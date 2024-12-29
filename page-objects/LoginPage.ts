@@ -3,11 +3,7 @@ import { AbstractPage } from "./AbstractPage";
 
 export class LoginPage extends AbstractPage{
     
-    // Instruction to which hyperlink we are pointing
-
-    public async goto(){
-        await this.page.goto('https://pandicapet.shop/')
-    }
+    
 
     // Locators
 
