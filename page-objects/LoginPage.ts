@@ -6,11 +6,12 @@ export class LoginPage extends AbstractPage{
     // Instruction to which hyperlink we are pointing
 
     public async goto(){
-        await this.page.goto('https://pandicapet.shop/racun/')
+        await this.page.goto('https://pandicapet.shop/')
     }
 
     // Locators
 
+    signInLink = () => this.page.getByRole('link', { name: 'My Account' })
     loginPanel = () => this.page.locator('#customer_login')
     emailInputBox = () => this.page.getByLabel('Korisničko ime ili email')
     passwordInputBox = () => this.page.getByLabel('Šifra')
@@ -18,14 +19,21 @@ export class LoginPage extends AbstractPage{
   
     // Actions
 
-    public async clickEmailInputBox(){
-        await this.emailInputBox().click()
-    }
-    public async clickPasswordInputBox(){
-        await this.passwordInputBox().click()
-    }
-    public async clickLoginButton(){
+    // This action will allow us to call it withing the test and provide any
+    // necessary parameters for the test i.e. email & password
+    public async signIn(email: string, password: string){
+        await this.signInLink().click()
+        await this.emailInputBox().fill(email)
+        await this.passwordInputBox().fill(password)
         await this.loginButton().click()
+    }
+
+    // Assertions
+
+    // This assertion is checking if we are logged in by checking if the
+    // WordPress login pannel is visible
+    public async assertLoggedOut(){
+        await expect(this.loginPanel()).toBeVisible()
     }
 
 }

@@ -16,12 +16,15 @@ export class AccountPage extends AbstractPage{
   
     // Actions
     
-    public async clickLogOutButton(){
+    public async signOut(){
         await this.logOutButton().click()
     }
 
     // Assertions
 
+
+    // This assertion is checking if we are logged in by checking if the
+    // WordPress account pannel is visible
     public async assertLoggedIn(){
         await expect(this.accountPanel()).toBeVisible()
     }
