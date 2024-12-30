@@ -8,6 +8,7 @@ test('POM Homepage Test', async ({page}) => {
   await page.waitForTimeout(3000); // Waits for 3000 milliseconds (GitHub test fix)
 
   // Homepage elements presence test
+  await page.waitForTimeout(3000)
   await homePage.assertCheckHomePageElements()
   
 }) 
