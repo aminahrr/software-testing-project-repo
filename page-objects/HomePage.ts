@@ -15,10 +15,17 @@ export class HomePage extends AbstractPage{
     searchButton = () => this.page.getByRole('button', { name: 'Search' }) // Search button locator
     searchTextInput = () => this.page.getByPlaceholder('Start typing...') // Search input box locator
     searchResultButton = () => this.page.getByRole('button', { name: 'View all results' }) // Search result button locator
-
+    header = () => this.page.locator('#js-header-desktop div') // Header locator duh
+    navBar = () => this.page.locator('c-top-bar-menu') // NavBar locator duh2
+    heroSection = () => this.page.locator('.l-inner > .elementor > section > div').first() // Hero section locator
+    footer = () => this.page.locator('.l-section.c-footer.c-footer--mobile-buttons-menu') // Footer locator
+    productListing = () => this.page.locator('.c-product-grid__thumb.c-product-grid__thumb--cover') // Universal locator for a product I guess
+    
 
     // Actions
 
+    // This action click on the search button, if none is present it throws an error
+    // Used for further actions
     async clickSearchResultButton(){
 
         const searchButton: Locator = this.searchResultButton();
