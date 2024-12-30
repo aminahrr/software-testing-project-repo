@@ -20,5 +20,4 @@ test('POM Login/Logout Test', async ({page}) => {
   await accountPage.signOut(); // Loging out
   await page.waitForTimeout(3000); // Waits for 3000 milliseconds (GitHub test fix)
   await loginPage.assertLoggedOut() // Check for the WordPress Login Panel
-})
-
+}) 

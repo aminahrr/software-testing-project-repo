@@ -46,5 +46,20 @@ export class HomePage extends AbstractPage{
         await this.clickSearchResultButton()
         } 
         
+
+    // Assertions
+
+    // This assertion checks if the elements needed on homepage
+    // are visible/present
+    public async assertCheckHomePageElements(){
+        await expect(this.header()).toBeVisible()
+        await expect(this.navBar()).toBeVisible()
+        await expect(this.heroSection()).toBeVisible()
+        await expect(this.footer()).toBeVisible()
+        await expect(this.productListing()).toBeVisible()
     }
+
+    }
+
+    
     
