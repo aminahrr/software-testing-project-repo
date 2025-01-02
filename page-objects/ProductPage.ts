@@ -10,8 +10,50 @@ export class ProductPage extends AbstractPage{
     productListing = () => this.page.locator('.c-product-grid__thumb').first() // This locator points on the first listing
     addToCartButton = () => this.page.locator('.ajax_add_to_cart') // Universal add to cart button locator
     productTitle = () => this.page.locator('.c-product-grid__title-inner') // Universal product title locator
-  
-    // Actions
+    productCard = (productName: string) => this.page.locator(`.product-title:has-text("${productName}")`);
+    cartButton = () => this.page.getByRole('link', { name: 'Cart', exact: true })
+
+    //addToCartButton = () => this.page.getByRole('button', { name: 'Add to cart' });
+    // Actions 
+
+      // Selects a product by name
+  async selectProduct(productName: string) {
+    const product = this.productCard(productName);
+
+    if (await product.isVisible()) {
+      await product.click();
+    } else {
+      throw new Error(`Product "${productName}" not found.`);
+    }
+  }
+
+    // Adds the product to the cart
+    async addToCart() {
+        const addToCartButton = this.addToCartButton();
+    
+        if (await addToCartButton.isVisible()) {
+          await addToCartButton.click();
+        } else {
+          throw new Error("Add to cart button is not visible.");
+        }
+      }
+
+      async addToCartFirst() {
+        const addToCartButton = this.addToCartButton().first();
+    
+        if (await addToCartButton.isVisible()) {
+          await addToCartButton.click();
+        } else {
+          throw new Error("Add to cart button is not visible.");
+        }
+      }
+
+      async openCart() {
+        const cartButton = this.cartButton().first();
+          await cartButton.click();
+      }
+      
+    
 
 
 
