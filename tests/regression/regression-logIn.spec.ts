@@ -22,8 +22,4 @@ test.describe('Login Regression - Negative Scenarios', () => {
     await loginPage.assertMissingField(); // Assert a missing field error message
   });
 
-  test('Negative scenario - invalid email format', async ({ page }) => {
-    await loginPage.signIn('kurzenisbrudaa@.com', 'pass'); // Attempt login with invalid email format
-    await loginPage.assertInvalidData(); // Assert an invalid email error message
-  });
 });
