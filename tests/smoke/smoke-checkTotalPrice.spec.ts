@@ -21,7 +21,7 @@ test('POM Check Total Price', async ({page}) => {
   await page.waitForTimeout(3000);
   await productPage.openCart();
   await page.waitForTimeout(3000);
-  await cartPage.assertCartTotalCorrect();
+  await cartPage.assertCartTotal();
   
 
 })

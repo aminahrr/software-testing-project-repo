@@ -25,6 +25,36 @@ export class CartPage extends AbstractPage {
     }
   }
 
+  async assertCartTotal(): Promise<void> {
+    // Locators for item prices and total price
+    const priceLocator: string = '.c-cart__shop-td--product-subtotal';
+    const totalLocator: string = '.c-cart__totals-price--total';
+  
+    // Shipping cost
+    const shippingCost: number = 10.00;
+  
+    // Extract prices from the cart
+    const prices: number[] = await this.page.$$eval(priceLocator, (elements: HTMLElement[]) =>
+      elements.map(el => parseFloat(el.textContent!.replace('KM', '').replace(',', '.').trim()))
+    );
+  
+    // Calculate the expected total (subtotal + shipping)
+    const expectedTotal: number = prices.reduce((sum, price) => sum + price, 0) + shippingCost;
+  
+    // Extract the displayed total price
+    await this.page.locator(totalLocator).waitFor({ state: 'visible' });
+    const displayedTotalText = await this.page.textContent(totalLocator);
+    if (!displayedTotalText) {
+      throw new Error('Total price element has no text content.');
+    }
+    const displayedTotal: number = parseFloat(displayedTotalText.replace('KM', '').replace(',', '.').trim());
+  
+    // Assert that the displayed total matches the expected total
+    if (Math.abs(displayedTotal - expectedTotal) > 0.01) {
+      throw new Error(`Total mismatch: Expected ${expectedTotal.toFixed(2)} KM, but got ${displayedTotal.toFixed(2)} KM`);
+    }
+  }
+
   async assertProductTitleContainsWords(search: string) {
     const titleElements = this.productTitle();
     const searchWords = search.split(' ');
@@ -51,53 +81,4 @@ export class CartPage extends AbstractPage {
     }
 }  
 
-  /*async assertCartTotalCorrect() {
-    const total = await this.cartTotal().textContent();
-
-    // Check if the total is not null or undefined
-    if (total) {
-      // Convert the total to a number and validate it's greater than 0
-      const numericTotal = Number(total.replace(/[^\d.]/g, ''));
-      expect(numericTotal).toBeGreaterThan(0);
-    } else {
-      throw new Error('Cart total is missing or invalid.');
-    }
-  }*/
-
-    async assertCartTotalCorrect(): Promise<void> {
-        const total = await this.cartTotal().textContent();
-      
-        // Locators for product prices in the cart
-        const productPricesLocators = this.page.locator('.woocommerce-cart-form .cart_item .woocommerce-Price-amount.amount');
-      
-        // Extract the prices of the products in the cart
-        const productPricesText = await productPricesLocators.allTextContents();
-      
-        if (productPricesText && total) {
-          // Convert product prices and total to numeric values
-          const productPrices = productPricesText.map(priceText => {
-            // Remove non-numeric characters, including currency symbols, and parse to number
-            const cleanedPrice = priceText.replace(/[^\d.]/g, ''); // Keep only digits and the decimal point
-            return parseFloat(cleanedPrice);
-          });
-      
-          // If product prices are not correctly parsed, throw an error
-          if (productPrices.includes(NaN)) {
-            throw new Error('One or more product prices are invalid or cannot be parsed.');
-          }
-      
-          const numericTotal = parseFloat(total.replace(/[^\d.]/g, ''));
-      
-          // Calculate the expected total (sum of all product prices + 10)
-          const expectedTotal = productPrices.reduce((sum, price) => sum + price, 0)/2 + 10;
-      
-          // Assert that the displayed total matches the expected total
-          expect(numericTotal).toBeCloseTo(expectedTotal, 2); // Allow minor rounding differences
-        } else {
-          throw new Error('One or more price elements or the total element is missing or invalid.');
-        }
-      }
-      
-      
-      
 }
