@@ -9,10 +9,12 @@ export class ProductPage extends AbstractPage{
 
     productListing = () => this.page.locator('.c-product-grid__thumb').first() // This locator points on the first listing
     addToCartButton = () => this.page.locator('.ajax_add_to_cart') // Universal add to cart button locator
+    addToWishlistButton = () => this.page.locator('.c-wishlist__btn-icon ')   //('.ajax_add_to_cart') 
     productTitle = () => this.page.locator('.c-product-grid__title-inner') // Universal product title locator
     productCard = (productName: string) => this.page.locator(`.product-title:has-text("${productName}")`);
     cartButton = () => this.page.getByRole('link', { name: 'Cart', exact: true })
-
+    wishlistButton = () => this.page.getByRole('link', { name: 'Wishlist' })
+    productCard2 = () => this.page.locator('.c-product-grid__item') 
     //addToCartButton = () => this.page.getByRole('button', { name: 'Add to cart' });
     // Actions 
 
@@ -38,7 +40,7 @@ export class ProductPage extends AbstractPage{
         }
       }
 
-      async addToCartFirst() {
+    async addToCartFirst() {
         const addToCartButton = this.addToCartButton().first();
     
         if (await addToCartButton.isVisible()) {
@@ -47,10 +49,29 @@ export class ProductPage extends AbstractPage{
           throw new Error("Add to cart button is not visible.");
         }
       }
+    async openCart() {
+            const cartButton = this.cartButton().first();
+            await 
+            cartButton.click();
+        }
 
-      async openCart() {
-        const cartButton = this.cartButton().first();
-          await cartButton.click();
+
+      public async addToWishlistFirst() {
+        const addToWishlistButton = this.addToWishlistButton().first();
+    
+
+        await this.productCard2().first().hover();
+
+        await this.page.waitForTimeout(1000); 
+
+          await addToWishlistButton.click();
+        
+      }
+
+      
+      async openWishlist() {
+        const wishlistButton = this.wishlistButton().first();
+          await wishlistButton.click();
       }
       
     
