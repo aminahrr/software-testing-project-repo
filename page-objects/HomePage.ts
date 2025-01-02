@@ -21,6 +21,7 @@ export class HomePage extends AbstractPage{
     footer = () => this.page.locator('.l-section.c-footer.c-footer--mobile-buttons-menu') // Footer locator
     productListing = () => this.page.locator('.c-product-grid__item') // Universal locator for a product I guess
     categoryLink = (categoryName: string) => this.page.locator(`.category-link:has-text("${categoryName}")`);
+
     
 
     // Actions
@@ -48,6 +49,16 @@ export class HomePage extends AbstractPage{
         } 
         
 
+    async navigateToProductCategory(categoryName: string) {
+        const category = this.categoryLink(categoryName);
+    
+        if (await category.isVisible()) {
+            await category.click();
+        } else {
+            throw new Error(`Category "${categoryName}" not found.`);
+        }
+        }
+
     // Assertions
 
     // This assertion checks if the elements needed on homepage
@@ -59,17 +70,6 @@ export class HomePage extends AbstractPage{
         await expect(this.footer()).toBeVisible()
         await expect(this.productListing().first()).toBeVisible() // Now just checks for at least one product
     }
-    async navigateToProductCategory(categoryName: string) {
-        const category = this.categoryLink(categoryName);
     
-        if (await category.isVisible()) {
-          await category.click();
-        } else {
-          throw new Error(`Category "${categoryName}" not found.`);
-        }
-      }
 
     }
-
-    
-    

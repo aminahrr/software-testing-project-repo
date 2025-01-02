@@ -17,9 +17,9 @@ test.describe('Login Regression - Negative Scenarios', () => {
     await loginPage.assertErrorMessage(); // Assert an error message is shown
   });
 
-  test('Negative scenario - missing field', async ({ page }) => {
+  test('Negative scenario - missing password field', async ({ page }) => {
     await loginPage.signIn('kurzenis@gmail.com', ''); // Attempt login with missing password
-    await loginPage.assertMissingField(); // Assert a missing field error message
+    await loginPage.assertMissingPasswordField(); // Assert a missing field error message
   });
 
 });
