@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { HomePage } from '../../page-objects/HomePage';
 import { ProductPage } from '../../page-objects/ProductPage';
 import { CartPage } from '../../page-objects/CartPage';
-
+//NOTE : Sometimes it doesnt work, usually does
 test('POM Add To Cart Test', async ({page}) => {
   const productPage = new ProductPage(page);
   const homePage = new HomePage(page);

@@ -1,4 +1,3 @@
-//NOTE : Sometimes it doesnt work, usually does
 import { expect, Locator, Page } from "@playwright/test";
 import { AbstractPage } from "./AbstractPage";
 
@@ -55,7 +54,7 @@ export class CartPage extends AbstractPage {
       throw new Error(`Total mismatch: Expected ${expectedTotal.toFixed(2)} KM, but got ${displayedTotal.toFixed(2)} KM`);
     }
   }
-
+//NOTE : Sometimes it doesnt work, usually does
   async assertProductTitleContainsWords(search: string) {
     const titleElements = this.productTitle();
     const searchWords = search.split(' ');
