@@ -1,7 +1,7 @@
 # Magneto Lumea E-Commerce Platform Testing Project
 
 ## Overview
-This repository contains automated tests for the Magneto Lumea e-commerce platform implemented as part of the SE302 Software Testing and Maintenance course. The tests are written in TypeScript using Playwright.
+This repository contains automated tests for the Pandica Petshop e-commerce platform. This is a team project for the SE302-Software Testing and Maintenance course. The tests are written in TypeScript using Playwright.
 
 ## Prerequisites
 - Node.js installed on your machine
@@ -10,8 +10,8 @@ This repository contains automated tests for the Magneto Lumea e-commerce platfo
 ## Setup
 1. Clone the repository to your local machine.
    ```bash
-   git clone https://github.com/your-username/QA-Project.git
-   cd QA-Project
+   git clone https://github.com/aminahrr/software-testing-project-repo.git
+   cd software-testing-project-repo
 
 2. Initialize the project with npm.
     ```bash
@@ -25,7 +25,7 @@ This repository contains automated tests for the Magneto Lumea e-commerce platfo
 ## Running Tests
 
 ### Run All Tests 
-    
+
     
     npx playwright test 
 
@@ -54,23 +54,22 @@ This repository contains automated tests for the Magneto Lumea e-commerce platfo
 ## Test Scenarios
 
 ### Smoke Tests
-    Checkout
-    Registration
+    Add Product to Cart
+    Check Total Price
     Home Page
     Log in/Log out
-    Search
+    Search Items
 
 ### Regression Tests
-    Advanced Search
-    Category
-    Invalid Checkout
-    Invalid Create Account
     Invalid Login
-    Footer
-    NavBar
-    Orders and Returns
-    Promo Banners
-    Search Items
+    Add Product to Wishlist
+
+#### Ideas for other tests:
+    (bug)checkout adress of city and postal code do not match
+    Category
+    Contact us-invalid email
+    
+    
 
 ## Thank you
 

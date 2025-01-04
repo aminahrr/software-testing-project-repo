@@ -1,3 +1,4 @@
+//NOTE : Sometimes it doesnt work, usually does
 import { expect, Locator, Page } from "@playwright/test";
 import { AbstractPage } from "./AbstractPage";
 
@@ -11,7 +12,7 @@ export class CartPage extends AbstractPage {
 
   // Actions
   async goto() {
-    await this.page.goto('https://pandicapet.shop/korpa'); // Update with the actual cart URL
+    await this.page.goto('https://pandicapet.shop/korpa');
   }
 
   // Assertions
@@ -19,7 +20,7 @@ export class CartPage extends AbstractPage {
     const product = this.cartItem(productName);
 
     if (await product.isVisible()) {
-      await expect(product).toBeVisible(); // Ensures the product is present in the cart
+      await expect(product).toBeVisible(); // product is present in the cart
     } else {
       throw new Error(`Product "${productName}" not found in the cart.`);
     }
