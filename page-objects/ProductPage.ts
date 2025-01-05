@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { expect, Locator, Page, BrowserContext } from "@playwright/test";
 import { AbstractPage } from "./AbstractPage";
 
 
@@ -19,6 +19,14 @@ export class ProductPage extends AbstractPage{
     addedToCartAlert = () => this.page.getByRole('alert') // Added to cart alert locator
     categoryTitle = () => this.page.locator('c-page-header__title') // Category title locator
     numberOfItems = () => this.page.locator('.woocommerce-result-count') // Number of items locator
+    productOrdering = () => this.page.locator('.c-catalog-ordering') // Product ordering filters locator
+    productFilterSidebar = () => this.page.locator('#js-shop-sidebar') // Product filter sidebar locator
+    productPhoto = () => this.page.locator('.c-product-grid__thumb') // Product photo locator
+    productPagination = () => this.page.getByLabel('Product Pagination') // Product Pagination locator
+
+
+
+
     
     //addToCartButton = () => this.page.getByRole('button', { name: 'Add to cart' });
     // Actions 
@@ -118,5 +126,15 @@ export class ProductPage extends AbstractPage{
             throw new Error(`None of the search words found in any product title. Titles checked were: ${titlesText.join(', ')}`);
         }
     }   
+
+    // Assertion checks if the pagination is visible
+    public async assertPagination(){
+      await this.productPagination().isVisible();
+    }
+
+    // Assertion checks if the pagination is visible
+    public async assert(){
+      await this.productPagination().isVisible();
+    }
 
 }
