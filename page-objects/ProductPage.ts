@@ -21,7 +21,7 @@ export class ProductPage extends AbstractPage{
     numberOfItems = () => this.page.locator('.woocommerce-result-count') // Number of items locator
     productOrdering = () => this.page.locator('.c-catalog-ordering') // Product ordering filters locator
     productFilterSidebar = () => this.page.locator('#js-shop-sidebar') // Product filter sidebar locator
-    productPhoto = () => this.page.locator('.c-product-grid__thumb') // Product photo locator
+    productPhoto = () => this.page.locator('.c-product-grid__thumb--cover') // Product photo locator
     productPagination = () => this.page.getByLabel('Product Pagination') // Product Pagination locator
 
 
@@ -128,13 +128,39 @@ export class ProductPage extends AbstractPage{
     }   
 
     // Assertion checks if the pagination is visible
-    public async assertPagination(){
+    public async assertCheckPagination(){
       await this.productPagination().isVisible();
     }
 
-    // Assertion checks if the pagination is visible
-    public async assert(){
-      await this.productPagination().isVisible();
+    // Assertion checks if the product photo is visible
+    public async assertCheckProductPhoto(){
+      await this.productPhoto().first().isVisible();
     }
+
+    // Assertion checks if the filter sidebar is visible
+    public async assertCheckFilterSidebar(){
+      await this.productFilterSidebar().isVisible();
+    }
+
+    // Assertion checks if the product ordering is visible
+    public async assertCheckOrdering(){
+      await this.productOrdering().isVisible();
+    }
+
+    // Assertion checks if the numver of times is visible
+    public async assertCheckNumberOfItems(){
+      await this.numberOfItems().isVisible();
+    }
+
+    // Assertion checks if the category title is visible
+    public async assertCheckCategoryTitle(){
+      await this.categoryTitle().isVisible();
+    }
+
+    // Assertion checks if the product card is visible
+    public async assertCheckProductCard(){
+      await this.productCard2().first().isVisible();
+    }
+
 
 }
