@@ -1,4 +1,4 @@
-# Magneto Lumea E-Commerce Platform Testing Project
+# Pandica Petshop E-Commerce Platform Testing Project
 
 ## Overview
 This repository contains automated tests for the Pandica Petshop e-commerce platform. This is a team project for the SE302-Software Testing and Maintenance course. The tests are written in TypeScript using Playwright.
@@ -70,8 +70,6 @@ This repository contains automated tests for the Pandica Petshop e-commerce plat
 
 #### Ideas for other tests:
     (bug)checkout adress of city and postal code do not match
-    Category
-    Contact us-invalid email
     
     
 
