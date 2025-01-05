@@ -21,7 +21,7 @@ export class ProductPage extends AbstractPage{
     numberOfItems = () => this.page.locator('.woocommerce-result-count') // Number of items locator
     productOrdering = () => this.page.locator('.c-catalog-ordering') // Product ordering filters locator
     productFilterSidebar = () => this.page.locator('#js-shop-sidebar') // Product filter sidebar locator
-    productPhoto = () => this.page.locator('.c-product-grid__thumb') // Product photo locator
+    productPhoto = () => this.page.locator('.c-product-grid__thumb--cover') // Product photo locator
     productPagination = () => this.page.getByLabel('Product Pagination') // Product Pagination locator
     productName = (productName: string) => this.page.locator(`.c-product-title:has-text("${productName}")`); 
     productPrice = (productPrice: string) => this.page.locator();
