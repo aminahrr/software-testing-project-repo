@@ -16,6 +16,7 @@ export class HomePage extends AbstractPage{
     searchButton = () => this.page.getByRole('button', { name: 'Search' }) // Search button locator
     searchTextInput = () => this.page.getByPlaceholder('Start typing...') // Search input box locator
     searchResultButton = () => this.page.getByRole('button', { name: 'View all results' }) // Search result button locator
+    searchNoResult = () => this.page.getByText('No results found') // Locator which indicates we entered an invalid search prompt
     header = () => this.page.locator("#main-header") // Header locator duh
     navBar = () => this.page.locator('#top-bar-menu') // NavBar locator duh2
     seccondNavBar = () => this.page.locator('#js-header-desktop div') // 2nd NavBar locator (why do they have 2 nav bars!?!?!?!?!?!?!?!?!?!!????)
@@ -95,14 +96,16 @@ export class HomePage extends AbstractPage{
 
     // This action click on the search button
     public async clickSearchResultButton(){
+        if (await this.searchResultButton().isVisible()){
             await this.searchResultButton().click()
+            }
         }
 
     // This action searches for any item provided with the search parameter
     public async searchItem(search: string){
         await this.searchButton().click()
         await this.searchTextInput().fill(search)
-        await this.page.waitForTimeout(300); // Waits for 300 milliseconds (GitHub test fix)
+        await this.page.waitForTimeout(3000); // Waits for 3000 milliseconds (GitHub test fix)
         await this.clickSearchResultButton()
         } 
         
@@ -113,6 +116,11 @@ export class HomePage extends AbstractPage{
     
 
     // Assertions
+
+    // This assertion checks if search prompt has no results
+    public async assertNoSearchResults(){
+        await expect(this.searchNoResult()).toBeVisible()
+    }
 
     // This assertion checks if the elements needed on homepage
     // are visible/present
