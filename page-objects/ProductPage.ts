@@ -21,14 +21,10 @@ export class ProductPage extends AbstractPage{
     numberOfItems = () => this.page.locator('.woocommerce-result-count') // Number of items locator
     productOrdering = () => this.page.locator('.c-catalog-ordering') // Product ordering filters locator
     productFilterSidebar = () => this.page.locator('#js-shop-sidebar') // Product filter sidebar locator
-    productPhoto = () => this.page.locator('.c-product-grid__thumb--cover') // Product photo locator
+    productPhoto = () => this.page.locator('.c-product-grid__thumb') // Product photo locator
     productPagination = () => this.page.getByLabel('Product Pagination') // Product Pagination locator
-
-
-
-
-    
-    //addToCartButton = () => this.page.getByRole('button', { name: 'Add to cart' });
+    productName = (productName: string) => this.page.locator(`.c-product-title:has-text("${productName}")`); 
+    productPrice = (productPrice: string) => this.page.locator();
     // Actions 
 
     // Selects a product by name
@@ -100,6 +96,18 @@ export class ProductPage extends AbstractPage{
       expect(Categorytitle).toContain(title);
     }
 
+    // checks details of produc
+    public async assertCheckProductDetails(title){
+      //title check
+      const ProductTitle = await this.productName(title);
+      expect(ProductTitle).toContainText(title);
+      //price check
+      const ProductPrice = await this.productPrice(price);
+      expect(ProductTitle).toContainText(title);
+      //
+
+    }
+
     // This assertion check for the search parameter from HomePage.ts inside of the product title 
     async assertProductTitleContainsWords(search: string) {
         const titleElements = this.productTitle();
@@ -128,39 +136,13 @@ export class ProductPage extends AbstractPage{
     }   
 
     // Assertion checks if the pagination is visible
-    public async assertCheckPagination(){
+    public async assertPagination(){
       await this.productPagination().isVisible();
     }
 
-    // Assertion checks if the product photo is visible
-    public async assertCheckProductPhoto(){
-      await this.productPhoto().first().isVisible();
+    // Assertion checks if the pagination is visible
+    public async assert(){
+      await this.productPagination().isVisible();
     }
-
-    // Assertion checks if the filter sidebar is visible
-    public async assertCheckFilterSidebar(){
-      await this.productFilterSidebar().isVisible();
-    }
-
-    // Assertion checks if the product ordering is visible
-    public async assertCheckOrdering(){
-      await this.productOrdering().isVisible();
-    }
-
-    // Assertion checks if the numver of times is visible
-    public async assertCheckNumberOfItems(){
-      await this.numberOfItems().isVisible();
-    }
-
-    // Assertion checks if the category title is visible
-    public async assertCheckCategoryTitle(){
-      await this.categoryTitle().isVisible();
-    }
-
-    // Assertion checks if the product card is visible
-    public async assertCheckProductCard(){
-      await this.productCard2().first().isVisible();
-    }
-
 
 }
