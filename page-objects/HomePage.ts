@@ -23,12 +23,19 @@ export class HomePage extends AbstractPage{
     footer = () => this.page.locator('.l-section.c-footer.c-footer--mobile-buttons-menu') // Footer locator
     productListing = () => this.page.locator('.c-product-grid__item') // Universal locator for a product I guess
     categoryLink = (categoryName: string) => this.page.locator(`.category-link:has-text("${categoryName}")`); // Universal Category link locator
+    
+    categoryButton = (itemName: string) => this.page.locator(`li.c-top-menu__item span:has-text("${itemName}")`); // Universal Nav Category Locator
+    subCategoryButton = (itemName: string) => this.page.locator(`//li[contains(@class, 'c-top-menu__item--has-children')]/a[contains(text(), '${itemName}')]`); // Universal Nav SubCategory Locator
+    categoryCard = () => this.page.locator('#top-menu-desktop').getByRole('list') // Category Card Locator
+    subCategoryItem = (categoryName, subCategoryName) => this.page.locator(`//li[contains(@class, 'c-top-menu__item--has-children') and .//span[contains(text(), '${categoryName}')]]//li[contains(@class, 'c-top-menu__subitem')]//a[contains(text(), '${subCategoryName}')]`);
+
     footerBlog = () => this.page.getByRole('contentinfo').getByRole('link', { name: 'Blog' })// Button locator which navigates us to the blog page from the footer
     footerAboutUs = () => this.page.getByRole('contentinfo').getByRole('link', { name: 'O nama' })// Button locator which navigates us to the about us page from the footer
     footerContact = () => this.page.getByRole('contentinfo').getByRole('link', { name: 'Kontakt' })// Button locator which navigates us to the contact page from the footer
     footerShop = () => this.page.getByRole('contentinfo').getByRole('link', { name: 'Shop' })// Button locator which navigates us to the shop page from the footer
     navWishlistButton = () => this.page.getByRole('link', { name: 'Wishlist' }) // NavBar Wishlist button locator
     navCartButton = () => this.page.getByRole('link', { name: 'Cart', exact: true }) // NavBar Cart button locator
+    
     // Nav Bar button locators
     navHomepageButton = () => this.page.locator('#menu-item-4532').getByRole('link', { name: 'Početna' }) // NavBar Homepage button locator
     navShopButton = () => this.page.locator('#menu-item-4533').getByRole('link', { name: 'Shop' }) // NavBar Shop button locator
@@ -43,7 +50,8 @@ export class HomePage extends AbstractPage{
     navTerrariumButton = () => this.page.locator('#top-menu-desktop').getByText('Teraristika') // NavBar Terrarium button locator
     navPharmacyButton = () => this.page.locator('#top-menu-desktop').getByText('Apoteka') // NavBar Pharmacy button locator
     navMyPetButton = () => this.page.getByRole('link', { name: 'Moj ljubimac' }) // NavBar MyPet button locator
-    // Nav Bar Subcategory locators
+    
+    // Nav Bar Subcategory specific locators
     navDogsSubButton = () => this.page.getByRole('link', { name: 'Hrana za pse ' }) // NavBar Dogs Subcateogry button locator
     navCatsSubButton = () => this.page.getByRole('link', { name: 'Hrana za mačke ' }) // NavBar Cats Subcategory button locator
     navBirdsSubButton = () => this.page.getByRole('link', { name: 'Hrana za ptice ' }) // NavBar Birds Subcategory button locator
@@ -56,6 +64,34 @@ export class HomePage extends AbstractPage{
 
 
     // Actions
+
+    // This action clicks on the category in the nav menu provided with the string argument
+    public async clickMenuItem(itemName: string) {
+        try {
+            const menuItem = this.categoryButton(itemName);
+            await menuItem.click();
+            await menuItem.hover();
+        } catch (error) {
+            console.error(`Error clicking on menu item '${itemName}':`, error);
+        }
+    }
+
+    // This action clicks on the subcategory in the nav menu provided with the string argument
+   // Click on the sub-category item
+   async clickSubCategoryItem(categoryName, subCategoryName) {
+    try {
+        await this.clickMenuItem(categoryName);
+        console.log(`Hovered on category: ${categoryName}`);
+
+        const subCategoryItem = this.subCategoryItem(categoryName, subCategoryName);
+        await subCategoryItem.waitFor({ state: 'visible' });
+
+        await subCategoryItem.click();
+        console.log(`Clicked on sub-category item: ${subCategoryName}`);
+    } catch (error) {
+        console.error(`Error clicking on sub-category item '${subCategoryName}':`, error);
+    }
+   }
 
     // This action click on the search button
     public async clickSearchResultButton(){
@@ -70,16 +106,7 @@ export class HomePage extends AbstractPage{
         await this.clickSearchResultButton()
         } 
         
-    // This action navigates us to the product category using the string provided with the method 
-    async navigateToProductCategory(categoryName: string) {
-        const category = this.categoryLink(categoryName);
     
-        if (await category.isVisible()) {
-            await category.click();
-        } else {
-            throw new Error(`Category "${categoryName}" not found.`);
-        }
-        }
 
 
     

@@ -17,6 +17,8 @@ export class ProductPage extends AbstractPage{
     cartButton = () => this.page.getByRole('link', { name: 'Cart', exact: true }) // Cart button locator
     wishlistButton = () => this.page.getByRole('link', { name: 'Wishlist' }) // Wishlist button locator
     addedToCartAlert = () => this.page.getByRole('alert') // Added to cart alert locator
+    categoryTitle = () => this.page.locator('c-page-header__title') // Category title locator
+    numberOfItems = () => this.page.locator('.woocommerce-result-count') // Number of items locator
     
     //addToCartButton = () => this.page.getByRole('button', { name: 'Add to cart' });
     // Actions 
@@ -58,9 +60,37 @@ export class ProductPage extends AbstractPage{
     async openWishlist() {
         await this.wishlistButton().first().click();
     }
-      
+
+    // This action gets the title of the category
+    async getPageTitle(): Promise<string> {
+      const titleLocator = this.page.locator('.c-page-header__title');
+      if (await titleLocator.isVisible()) {
+          const titleText = await titleLocator.textContent();
+          return titleText ?? "";  // Using nullish coalescing to handle null
+      }
+      return "";  // Return an empty string if the title element is not visible
+    }
+    
+    /**
+     * Checks the number in the 'Showing all X results' text against an expected number.
+     * @param expectedNumber The number of expected results to compare against the one in the text.
+     */
+    async checkResultsCount(expectedNumber: number): Promise<void> {
+      const resultsText = await this.numberOfItems().textContent();
+
+      // Check if resultsText is not null, then extract numbers
+      const numberMatch = resultsText ? resultsText.match(/\d+/) : null;
+      const actualNumber = numberMatch ? parseInt(numberMatch[0], 10) : 0
+      expect(actualNumber).toBe(expectedNumber);
+    }
     
     // Assertions
+
+    // This assertion checks if the category we entered is correct
+    public async assertCheckSubCategory(title){
+      const Categorytitle = await this.getPageTitle();
+      expect(Categorytitle).toContain(title);
+    }
 
     // This assertion check for the search parameter from HomePage.ts inside of the product title 
     async assertProductTitleContainsWords(search: string) {
