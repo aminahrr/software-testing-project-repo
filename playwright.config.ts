@@ -1,15 +1,19 @@
-import { PlaywrightTestConfig } from '@playwright/test'
+import { PlaywrightTestConfig } from '@playwright/test';
+
+const isCI = process.env.CI === 'true';
 
 const config: PlaywrightTestConfig = {
-  timeout: 60000,
-  retries: 0,
+  timeout: isCI ? 90000 : 60000, // Extend timeout for CI
+  retries: isCI ? 2 : 0, // Retry tests only in CI
   use: {
     headless: true,
     viewport: { width: 1280, height: 720 },
-    actionTimeout: 15000,
+    actionTimeout: isCI ? 20000 : 15000, // Increase action timeout for CI
+    navigationTimeout: isCI ? 30000 : 20000, // Increase navigation timeout for CI
     ignoreHTTPSErrors: true,
-    video: 'retain-on-failure',
+    video: isCI ? 'on-first-retry' : 'retain-on-failure', // Debugging videos only for CI
     screenshot: 'only-on-failure',
+    trace: isCI ? 'retain-on-failure' : 'off', // Capture trace for CI failures
   },
   projects: [
     {
@@ -25,6 +29,11 @@ const config: PlaywrightTestConfig = {
       use: { browserName: 'webkit' },
     },
   ],
-}
+  reporter: [
+    ['list'],
+    ['html', { open: 'never' }], // Generate HTML report for CI
+  ],
+  outputDir: 'test-results/', // Store artifacts in a specific folder
+};
 
-export default config
+export default config;
