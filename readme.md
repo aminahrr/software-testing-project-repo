@@ -61,9 +61,12 @@ This repository contains automated tests for the Pandica Petshop e-commerce plat
     Search Items
 
 ### Regression Tests
-    Invalid Login
     Add Product to Wishlist
+    Category Filters
+    Contact Invalid
     Footer
+    Invalid Login
+    Navigation Bar
 
 #### Ideas for other tests:
     (bug)checkout adress of city and postal code do not match
