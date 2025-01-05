@@ -14,9 +14,11 @@ export class WishlistPage extends AbstractPage {
 
   async assertProductTitleContainsWords(search: string) {
     const titleElements = this.productTitle();
+    await titleElements.first().waitFor({ state: 'visible' }); // Ensure elements are visible
+
     const searchWords = search.split(' ');
     let containsWord = false;
-    
+
     // Get texts from all title elements
     const titlesText = await titleElements.allTextContents();
 
@@ -36,6 +38,6 @@ export class WishlistPage extends AbstractPage {
     if (!containsWord) {
         throw new Error(`None of the search words found in any product title. Titles checked were: ${titlesText.join(', ')}`);
     }
-}   
+    }   
 
 }

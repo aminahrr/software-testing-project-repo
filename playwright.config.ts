@@ -25,8 +25,14 @@ const config: PlaywrightTestConfig = {
       use: { browserName: 'firefox' },
     },
     {
-      name: 'Webkit',
-      use: { browserName: 'webkit' },
+      name: 'WebKit',
+      use: {
+        browserName: 'webkit',
+        viewport: { width: 1280, height: 720 },
+        launchOptions: {
+          args: ['--disable-features=SameSiteByDefaultCookies'], // Optional: Fix cookie issues in WebKit
+        }
+      }
     },
   ],
   reporter: [

@@ -3,20 +3,30 @@ import { HomePage } from '../../page-objects/HomePage';
 import { ProductPage } from '../../page-objects/ProductPage';
 import { WishlistPage } from '../../page-objects/WishlistPage';
 
-test('POM Add To Wishlist Test', async ({page}) => {
-  const productPage = new ProductPage(page);
-  const homePage = new HomePage(page);
-  const wishlistPage = new WishlistPage(page)
+test.describe('Adding Product to Wishlist', () => {
+  let homePage;
+  let productPage
+  let wishlistPage
 
-  await homePage.goto(); // Goes to the homepage of the website
+  // before the test we navigate to the homepage
+  test.beforeEach(async ({ page, browserName }) => {
+    if (browserName === 'webkit') {
+      await page.bringToFront(); // Ensure the browser is in focus
+    }
+    homePage = new HomePage(page);
+    productPage = new ProductPage(page);
+    wishlistPage = new WishlistPage(page);
+    await homePage.goto(); 
+  });
 
-  const searchQuery = "Cat Nip"; // The item we are searching for
-  await homePage.searchItem(searchQuery); // Enters the search query and proceeds
-  await page.waitForTimeout(3000); // Waits for 3000 milliseconds (GitHub test fix)
-  
-  await productPage.addToWishlistFirst();
-  await page.waitForTimeout(3000); 
-  await productPage.openWishlist();
-  await wishlistPage.assertProductTitleContainsWords("Cat Nip");
+  // Testing if the adding to whislist functionality works
+  test('Testing Adding Product To Wishlist', async ({ page }) => {
+
+    await homePage.searchItem("Cat Nip"); // Enters the search query and proceeds
+    await productPage.addToWishlistFirst(); // Adds first item to the wishlist
+    await page.waitForTimeout(300); // Waits for 500 milliseconds (GitHub test fix)
+    await productPage.openWishlist(); // Opens the wishlist page
+    await wishlistPage.assertProductTitleContainsWords("Cat Nip"); // Checks if the previously added item is on the wishlist page
+  });
 
 })
