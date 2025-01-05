@@ -2,21 +2,29 @@ import { test, expect } from '@playwright/test';
 import { HomePage } from '../../page-objects/HomePage';
 import { ProductPage } from '../../page-objects/ProductPage';
 import { CartPage } from '../../page-objects/CartPage';
-//NOTE : Sometimes it doesnt work, usually does
-test('POM Add To Cart Test', async ({page}) => {
-  const productPage = new ProductPage(page);
-  const homePage = new HomePage(page);
-  const cartPage = new CartPage(page);
 
-  await homePage.goto(); // Goes to the homepage of the website
 
-  const searchQuery = "Cat Nip"; // The item we are searching for
-  await homePage.searchItem(searchQuery); // Enters the search query and proceeds
-  await page.waitForTimeout(3000); // Waits for 3000 milliseconds (GitHub test fix)
-  
-  await productPage.addToCartFirst();
-  await page.waitForTimeout(3000); 
-  await productPage.openCart();
-  await cartPage.assertProductTitleContainsWords("Cat Nip");
+test.describe('Add Prodcut To Cart', () => {
+  let homePage;
+  let productPage;
+  let cartPage;
+
+  // before the test we navigate to the homepage
+  test.beforeEach(async ({page}) => {
+    homePage = new HomePage(page);
+    productPage = new ProductPage(page)
+    cartPage = new CartPage(page)
+    await homePage.goto();
+  }) 
+
+  // Testing if we added the correct item inside of the cart
+  test('Checking if item is in cart', async ({page}) => {
+
+    await homePage.searchItem("Cat Nip"); // Enters the search query and proceeds
+    await productPage.addToCartFirst(); // We add the first item to the cart
+    await productPage.openCart(); // We open the cart page
+    await cartPage.assertProductTitleContainsWords("Cat Nip"); // We check if the item is inside of the cart
+
+  })
 
 })

@@ -2,12 +2,12 @@ import { expect, Locator, Page } from "@playwright/test";
 import { AbstractPage } from "./AbstractPage";
 
 export class CartPage extends AbstractPage {
+
   // Locators
   cartItems = () => this.page.locator('.cart-item'); // General locator for all cart items
-  cartItem = (productName: string) =>
-    this.page.locator(`.cart-item:has-text("${productName}")`); // Locator for specific product in the cart
-  cartTotal = () => this.page.locator('.woocommerce-Price-amount.amount').last()// Locator for the total price
-  productTitle = () => this.page.locator('.c-cart__shop-td--product-name')
+  cartItem = (productName: string) => this.page.locator(`.cart-item:has-text("${productName}")`); // Locator for specific product in the cart
+  cartTotal = () => this.page.locator('.woocommerce-Price-amount.amount').last() // Locator for the total price
+  productTitle = () => this.page.locator('.c-cart__shop-td--product-name') // Locator the the product title
 
   // Actions
   async goto() {
@@ -26,6 +26,7 @@ export class CartPage extends AbstractPage {
   }
 
   async assertCartTotal(): Promise<void> {
+    await this.page.waitForTimeout(300); // Waits for 500 milliseconds (GitHub test fix)
     // Locators for item prices and total price
     const priceLocator: string = '.c-cart__shop-td--product-subtotal';
     const totalLocator: string = '.c-cart__totals-price--total';
@@ -56,6 +57,7 @@ export class CartPage extends AbstractPage {
   }
 //NOTE : Sometimes it doesnt work, usually does
   async assertProductTitleContainsWords(search: string) {
+    await this.page.waitForTimeout(300); // Waits for 300 milliseconds (GitHub test fix)
     const titleElements = this.productTitle();
     const searchWords = search.split(' ');
     let containsWord = false;

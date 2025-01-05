@@ -2,6 +2,7 @@ import { expect, Locator, Page } from "@playwright/test";
 import { AbstractPage } from "./AbstractPage";
 
 export class HomePage extends AbstractPage{
+    
 
     // Instruction to which hyperlink we are pointing
 
@@ -29,25 +30,16 @@ export class HomePage extends AbstractPage{
 
     // Actions
 
-    // This action click on the search button, if none is present it throws an error
-    // Used for further actions
-    async clickSearchResultButton(){
-
-        const searchButton: Locator = this.searchResultButton();
-
-        if (await searchButton.isVisible()){
+    // This action click on the search button
+    public async clickSearchResultButton(){
             await this.searchResultButton().click()
-        } else {
-             // Throw an error if the search result button is not visible
-             throw new Error("Such item is not available.");
         }
-    }
 
     // This action searches for any item provided with the search parameter
     public async searchItem(search: string){
         await this.searchButton().click()
         await this.searchTextInput().fill(search)
-        await this.page.waitForTimeout(3000); // Waits for 3000 milliseconds (GitHub test fix)
+        await this.page.waitForTimeout(300); // Waits for 300 milliseconds (GitHub test fix)
         await this.clickSearchResultButton()
         } 
         
@@ -77,7 +69,6 @@ export class HomePage extends AbstractPage{
         await expect(this.footer()).toBeVisible()
         await expect(this.productListing().first()).toBeVisible() // Now just checks for at least one product
     }
-    
 
     // This assertion checks if the footer is visible
     public async assertCheckFooter(){

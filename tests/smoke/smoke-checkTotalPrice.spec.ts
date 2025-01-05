@@ -3,25 +3,33 @@ import { HomePage } from '../../page-objects/HomePage';
 import { ProductPage } from '../../page-objects/ProductPage';
 import { CartPage } from '../../page-objects/CartPage';
 
-test('POM Check Total Price', async ({page}) => {
-  const productPage = new ProductPage(page);
-  const homePage = new HomePage(page);
-  const cartPage = new CartPage(page);
 
-  await homePage.goto(); // Goes to the homepage of the website
+test.describe('Check Total', () => {
+  let homePage;
+  let productPage;
+  let cartPage;
 
-  const searchQuery = "Cat Nip"; // The item we are searching for
-  await homePage.searchItem(searchQuery); // Enters the search query and proceeds
-  await page.waitForTimeout(3000); // Waits for 3000 milliseconds (GitHub test fix)
-  await productPage.addToCartFirst();
-  const searchQuery2 = "Hrana Za Pse"; // The item we are searching for
-  await homePage.searchItem(searchQuery2); // Enters the search query and proceeds
-  await page.waitForTimeout(3000); // Waits for 3000 milliseconds (GitHub test fix)
+  // before the test we navigate to the homepage
+  test.beforeEach(async ({page}) => {
+    homePage = new HomePage(page);
+    productPage = new ProductPage(page);
+    cartPage = new CartPage(page);
+    await homePage.goto();
+  }) 
+
+
+  // This test checks if the price of items in cart add up correctly to the total price
+  test('Checking Total Price', async ({page}) => {
+  
+
+  await homePage.searchItem("Cat Nip"); // Enters the search query and proceeds
+  await productPage.addToCartFirst(); // Adds the first item to the cart
+  await homePage.searchItem("Hrana Za Pse"); // Enters the search query and proceeds
   await productPage.addToCartFirst(); 
-  await page.waitForTimeout(3000);
   await productPage.openCart();
-  await page.waitForTimeout(3000);
   await cartPage.assertCartTotal();
   
 
 })
+
+});

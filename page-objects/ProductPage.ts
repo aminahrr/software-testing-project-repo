@@ -1,6 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { AbstractPage } from "./AbstractPage";
 
+
 export class ProductPage extends AbstractPage{
     
     // We aren't pointing to any specific hyperlink since the hyperlink is dynamic in this case
@@ -18,66 +19,49 @@ export class ProductPage extends AbstractPage{
     //addToCartButton = () => this.page.getByRole('button', { name: 'Add to cart' });
     // Actions 
 
-      // Selects a product by name
-  async selectProduct(productName: string) {
-    const product = this.productCard(productName);
+    // Selects a product by name
+    async selectProduct(productName: string) {
+      const product = this.productCard(productName);
 
-    if (await product.isVisible()) {
-      await product.click();
-    } else {
-      throw new Error(`Product "${productName}" not found.`);
+      if (await product.isVisible()) {
+        await product.click();
+      } else {
+        throw new Error(`Product "${productName}" not found.`);
+      }
     }
-  }
 
-    // Adds the product to the cart
-    async addToCart() {
-        const addToCartButton = this.addToCartButton();
-    
-        if (await addToCartButton.isVisible()) {
-          await addToCartButton.click();
-        } else {
-          throw new Error("Add to cart button is not visible.");
-        }
+    // Adds a product to cart
+    public async addToCartFirst() {
+      await this.addToCartButton().first().click()
+      await this.page.goto('https://pandicapet.shop/')
       }
 
-    async addToCartFirst() {
-        const addToCartButton = this.addToCartButton().first();
-    
-        if (await addToCartButton.isVisible()) {
-          await addToCartButton.click();
-        } else {
-          throw new Error("Add to cart button is not visible.");
-        }
-      }
-    async openCart() {
-            const cartButton = this.cartButton().first();
-            await 
-            cartButton.click();
-        }
+    // Opens the cart page  
+    public async openCart(){
+      await this.cartButton().click();
+    }
 
 
-      public async addToWishlistFirst() {
-        const addToWishlistButton = this.addToWishlistButton().first();
-    
+    // Adds the first product to the wishlist   
+    public async addToWishlistFirst() {
+      const addToWishlistButton = this.addToWishlistButton().first();
+  
 
-        await this.productCard2().first().hover();
+      await this.productCard2().first().hover();
 
-        await this.page.waitForTimeout(1000); 
+      await this.page.waitForTimeout(1000); 
 
-          await addToWishlistButton.click();
-        
-      }
-
+        await addToWishlistButton.click();
       
-      async openWishlist() {
-        const wishlistButton = this.wishlistButton().first();
-          await wishlistButton.click();
-      }
+    }
+
+    // Opens the wishlist page
+    async openWishlist() {
+      const wishlistButton = this.wishlistButton().first();
+        await wishlistButton.click();
+    }
       
     
-
-
-
     // Assertions
 
     // This assertion check for the search parameter from HomePage.ts inside of the product title 
