@@ -21,6 +21,7 @@ test.describe('Product Page Test', () => {
 
     await homePage.clickSubCategoryItem('Psi', 'Hrana za pse') // Opens the product page
     
+    
 
   })
 
