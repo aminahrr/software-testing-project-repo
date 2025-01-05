@@ -1,14 +1,19 @@
 import { test, expect } from '@playwright/test';
 import { HomePage } from '../../page-objects/HomePage';
 
-test('POM Homepage Test', async ({page}) => {
-  const homePage = new HomePage(page);
-
-  await homePage.goto(); // Goes to the homepage of the website
-  await page.waitForTimeout(3000); // Waits for 3000 milliseconds (GitHub test fix)
-
-  // Homepage elements presence test
-  await page.waitForTimeout(3000)
-  await homePage.assertCheckHomePageElements()
+test.describe('Homepage Test', () => {
+  let homePage;
   
-}) 
+   // before the test we navigate to the homepage
+    test.beforeEach(async ({page}) => {
+      homePage = new HomePage(page);
+      await homePage.goto();
+    }) 
+
+  // We are testing if all homepage elements are present
+  test('Testing Homepage Elements', async ({page}) => {
+
+    await homePage.assertCheckHomePageElements()
+    
+  }) 
+})
