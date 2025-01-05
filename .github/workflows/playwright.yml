@@ -20,6 +20,7 @@ jobs:
     - name: Run Playwright tests
       env:
         CI: true
+        DEBUG: pw:api,pw:browser
       run: npx playwright test
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
@@ -31,4 +32,4 @@ jobs:
       if: ${{ failure() }}
       with:
         name: playwright-traces
-        path: playwright-report/traces/
+        path: test-results/traces/

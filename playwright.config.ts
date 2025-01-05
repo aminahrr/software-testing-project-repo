@@ -3,17 +3,17 @@ import { PlaywrightTestConfig } from '@playwright/test';
 const isCI = process.env.CI === 'true';
 
 const config: PlaywrightTestConfig = {
-  timeout: isCI ? 90000 : 60000, // Extend timeout for CI
+  timeout: isCI ? 90000 : 60000, // Global test timeout
   retries: isCI ? 2 : 0, // Retry tests only in CI
   use: {
     headless: true,
     viewport: { width: 1280, height: 720 },
-    actionTimeout: isCI ? 20000 : 15000, // Increase action timeout for CI
-    navigationTimeout: isCI ? 30000 : 20000, // Increase navigation timeout for CI
+    actionTimeout: isCI ? 20000 : 15000, // Timeout for each action
+    navigationTimeout: isCI ? 30000 : 20000, // Timeout for navigation
     ignoreHTTPSErrors: true,
-    video: isCI ? 'on-first-retry' : 'retain-on-failure', // Debugging videos only for CI
+    video: isCI ? 'on-first-retry' : 'retain-on-failure', // Record video only in CI
     screenshot: 'only-on-failure',
-    trace: isCI ? 'retain-on-failure' : 'off', // Capture trace for CI failures
+    trace: isCI ? 'retain-on-failure' : 'off', // Capture trace for debugging in CI
   },
   projects: [
     {
@@ -30,10 +30,10 @@ const config: PlaywrightTestConfig = {
     },
   ],
   reporter: [
-    ['list'],
+    ['list'], // Console output
     ['html', { open: 'never' }], // Generate HTML report for CI
   ],
-  outputDir: 'test-results/', // Store artifacts in a specific folder
+  outputDir: 'test-results/', // Store artifacts like screenshots and videos
 };
 
 export default config;
