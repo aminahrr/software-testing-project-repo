@@ -21,7 +21,10 @@ export class HomePage extends AbstractPage{
     footer = () => this.page.locator('.l-section.c-footer.c-footer--mobile-buttons-menu') // Footer locator
     productListing = () => this.page.locator('.c-product-grid__item') // Universal locator for a product I guess
     categoryLink = (categoryName: string) => this.page.locator(`.category-link:has-text("${categoryName}")`);
-
+    footerBlog = () => this.page.getByRole('contentinfo').getByRole('link', { name: 'Blog' })// Button locator which navigates us to the blog page from the footer
+    footerAboutUs = () => this.page.getByRole('contentinfo').getByRole('link', { name: 'O nama' })// Button locator which navigates us to the about us page from the footer
+    footerContact = () => this.page.getByRole('contentinfo').getByRole('link', { name: 'Kontakt' })// Button locator which navigates us to the contact page from the footer
+    footerShop = () => this.page.getByRole('contentinfo').getByRole('link', { name: 'Shop' })// Button locator which navigates us to the shop page from the footer
     
 
     // Actions
@@ -48,7 +51,7 @@ export class HomePage extends AbstractPage{
         await this.clickSearchResultButton()
         } 
         
-
+    // This action navigates us to the product category using the string provided with the method 
     async navigateToProductCategory(categoryName: string) {
         const category = this.categoryLink(categoryName);
     
@@ -58,6 +61,10 @@ export class HomePage extends AbstractPage{
             throw new Error(`Category "${categoryName}" not found.`);
         }
         }
+
+
+    
+    
 
     // Assertions
 
@@ -71,5 +78,38 @@ export class HomePage extends AbstractPage{
         await expect(this.productListing().first()).toBeVisible() // Now just checks for at least one product
     }
     
+
+    // This assertion checks if the footer is visible
+    public async assertCheckFooter(){
+        await expect(this.footer()).toBeVisible()
+    }
+
+    // This assertion navigates us to the about us page and checks if the about us page opens
+    public async assertFooterAboutUs(){
+        await this.footerAboutUs().click()
+        const currentUrl = this.page.url()
+        await expect(currentUrl).toBe('https://pandicapet.shop/o-nama/')
+    }
+
+    // This assertion navigates us to the contact page and checks if the contact page opens
+    public async assertFooterContact(){
+        await this.footerContact().click()
+        const currentUrl = this.page.url()
+        await expect(currentUrl).toBe('https://pandicapet.shop/kontakt/')
+    }
+
+    // This assertion navigates us to the shop page and checks if the shop page opens
+    public async assertFooterShop(){
+        await this.footerShop().click()
+        const currentUrl = this.page.url()
+        await expect(currentUrl).toBe('https://pandicapet.shop/shop/')
+    }
+
+    // This assertion navigates us to the blog page and checks if the blog page opens
+    public async assertFooterBlog(){
+        await this.footerBlog().click()
+        const currentUrl = this.page.url()
+        await expect(currentUrl).toBe('https://pandicapet.shop/blog/')
+    }
 
     }
