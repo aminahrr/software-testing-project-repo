@@ -25,8 +25,12 @@ export class AccountPage extends AbstractPage{
 
     // This assertion is checking if we are logged in by checking if the
     // WordPress account pannel is visible
-    public async assertLoggedIn(){
-        await expect(this.accountPanel()).toBeVisible()
+    public async assertLoggedIn() {
+        // Wait for the element to be present
+        await this.page.waitForSelector('.c-account__col-content', { timeout: 10000 });
+    
+        // Assert visibility
+        await expect(this.accountPanel()).toBeVisible();
     }
 
 }

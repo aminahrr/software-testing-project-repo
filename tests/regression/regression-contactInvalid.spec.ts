@@ -19,7 +19,7 @@ test.describe('Contact Message - Negative Scenarios', () => {
     await contactPage.assertMissingField(); // Assert a missing field error message
   });
 
-  // Testing if an error message will appear when not entering anything into the email input field
+  // Testing if an error message will appear when not entering anything into the email input field !
   test('Negative scenario - missing email field', async ({ page }) => {
     await contactPage.sendMessage('IUS Student', '' , 'Pozdrav, ovu stranicu koristimo za testiranje u projektu za Software Testing and Maintenance predmet. Ova poruka je samo za testiranje kontakt stranice. Izvinjavam se na smetnji.'); // Attempt login with missing email
     await contactPage.assertMissingField(); // Assert a missing field error message
