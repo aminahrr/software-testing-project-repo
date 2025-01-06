@@ -25,7 +25,10 @@ export class ProductPage extends AbstractPage{
     productPagination = () => this.page.getByLabel('Product Pagination') // Product Pagination locator
     productName = (productName: string) => this.page.locator(`.c-product-title:has-text("${productName}")`); // Specific product name locator
     productName2 = () => this.page.locator('.c-product__title'); // Universal product name locator
-    productPrice = () => this.page.locator('.woocommerce-Price-amount.amount'); 
+    productPrice = () => this.page.locator('.woocommerce-Price-amount.amount'); // Universal product price locator
+    singleProductPageStock = () => this.page.locator('.stock.in-stock'); // Product stock locator
+    increaseStock = () => this.page.locator('.ip-plus'); // Add more items locator
+    currentStockAdded = () => this.page.locator('.input-text.qty.text.c-product__quantity-value') // Current added stock locator
 
     // Actions 
 
@@ -50,6 +53,34 @@ export class ProductPage extends AbstractPage{
     // Opens the cart page  
     public async openCart(){
       await this.cartButton().click();
+    }
+
+    // Get stock number from single product page
+    async getStockNumber(): Promise<number> {
+      const stockText = await this.singleProductPageStock().textContent();
+     // Use the match method on the string to find digits
+      const matches = stockText?.match(/\d+/); // Regular expression to find digits
+      if (matches) {
+          return parseInt(matches[0], 10); // Convert the first match to an integer
+      } else {
+          throw new Error('No stock number found.');
+      }
+    }
+
+    /**
+     * Increases the stock quantity by clicking the increase button based on the current stock number plus one.
+     */
+    async increaseStockByCurrentPlusOne(): Promise<void> {
+      const currentStock = await this.getStockNumber();
+      const totalClicks = currentStock + 1;
+
+      // Retrieve the locator for the increase stock button
+      const increaseButton = this.increaseStock();
+
+      // Click the increase button the required number of times
+      for (let i = 0; i < totalClicks; i++) {
+          await increaseButton.click();
+      }
     }
 
 
@@ -151,5 +182,27 @@ export class ProductPage extends AbstractPage{
     public async assert(){
       await this.productPagination().isVisible();
     }
+
+    /**
+     * Asserts that the displayed stock number matches the expected stock number.
+     */
+    async assertStockNumberMatches(): Promise<void> {
+      const expectedStockNumber = await this.getStockNumber();
+      const currentStockLocator = this.page.locator('.currentStockAdded'); // Adjust the locator to your actual element
+      const currentStockText = await currentStockLocator.textContent();
+      
+    // Handle potential null value for currentStockText
+    if (currentStockText === null) {
+      console.error("Failed to retrieve current stock text.");
+      throw new Error('Current stock text is null.');
+  }
+
+  const currentStockNumber = parseInt(currentStockText, 10);
+
+      if (currentStockNumber !== expectedStockNumber) {
+          console.error(`Stock numbers do not match: Expected ${expectedStockNumber}, but got ${currentStockNumber}`);
+          throw new Error('Stock numbers do not match.');
+      }
+  }
 
 }
