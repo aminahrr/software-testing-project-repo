@@ -22,6 +22,7 @@ test.describe('Add Prodcut To Cart', () => {
 
     await homePage.searchItem("Cat Nip"); // Enters the search query and proceeds
     await productPage.addToCartFirst(); // We add the first item to the cart
+    await page.waitForTimeout(1000); // Wait for 1000 ms
     await productPage.openCart(); // We open the cart page
     await cartPage.assertProductTitleContainsWords("Cat Nip"); // We check if the item is inside of the cart
 
