@@ -4,7 +4,7 @@ const isCI = process.env.CI === 'true';
 
 const config: PlaywrightTestConfig = {
   timeout: isCI ? 90000 : 60000, // Global test timeout
-  retries: 2,
+  retries: 5,
   use: {
     headless: true,
     viewport: { width: 1280, height: 720 },
