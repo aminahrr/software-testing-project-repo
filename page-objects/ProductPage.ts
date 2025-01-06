@@ -24,7 +24,8 @@ export class ProductPage extends AbstractPage{
     productPhoto = () => this.page.locator('.c-product-grid__thumb--cover') // Product photo locator
     productPagination = () => this.page.getByLabel('Product Pagination') // Product Pagination locator
     productName = (productName: string) => this.page.locator(`.c-product-title:has-text("${productName}")`); 
-    productPrice = (productPrice: string) => this.page.locator();
+    productPrice = (productPrice: string) => this.page.locator('.woocommerce-Price-amount.amount');
+
     // Actions 
 
     // Selects a product by name
@@ -97,13 +98,13 @@ export class ProductPage extends AbstractPage{
     }
 
     // checks details of produc
-    public async assertCheckProductDetails(title){
+    public async assertCheckProductDetails(title,expectedPrice){
       //title check
       const ProductTitle = await this.productName(title);
       expect(ProductTitle).toContainText(title);
       //price check
-      const ProductPrice = await this.productPrice(price);
-      expect(ProductTitle).toContainText(title);
+      const ProductPrice = await this.productPrice(price).first();
+      expect(ProductPrice).toContainText(expectedPrice);
       //
 
     }

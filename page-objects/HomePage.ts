@@ -60,7 +60,6 @@ export class HomePage extends AbstractPage{
     navAquaristicsSubButton = () => this.page.getByRole('link', { name: 'Hrana i lijekovi za ribe ' }) // NavBar Aqua Subcategory button locator
     navTerrariumSubButton = () => this.page.getByRole('link', { name: 'Hrana za reptile ' }) // NavBar Terrarium Subcategory button locator
     navPharmacySubButton = () => this.page.getByRole('link', { name: 'Zaštita od nametnika ' }) // NavBar Pharmacy Subcategory button locator
-    
 
 
 

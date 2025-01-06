@@ -7,7 +7,7 @@ import { ProductPage } from '../../page-objects/ProductPage';
 		Image Carousel: Validate the functionality of image galleries or carousels.
 		Stock Status: Check if the correct stock status (in stock/out of stock) is displayed.*/
 
-test.describe('Add Prodcut To Cart', () => {
+test.describe('Single Page', () => {
   let homePage;
   let productPage;
 
@@ -20,15 +20,10 @@ test.describe('Add Prodcut To Cart', () => {
 
   // Testing if we added the correct item inside of the cart
   test('Product Details Validation', async ({page}) => {
-
-    //await homePage.searchItem("Cat Nip"); // Enters the search query and proceeds
-    //await productPage.addToCartFirst(); // We add the first item to the cart
-    //await productPage.detailsOfFirst(); //opens details page of first item in search
-    //await productPage.stockStatus();
-    //await productPage.openCart(); // We open the cart page
-    await homePage.clickSubCategoryItem('Psi', 'Hrana za pse') // Opens the product page
-    await productPage.productCard2().first().click();
-    await productPage.detailsOfProduct(); //opens details page of first item in search
+    await homePage.navMyPetButton().click();
+    await page.waitForTimeout(300); // Waits for 300 milliseconds (GitHub test fix)
+    await productPage.productTitle().first().click(); //opens product details
+    await productPage.assertCheckProductDetails( 'Betta Splendens-Delta borac','15,00 KM'); //opens details page of first item in search
 
   })
 
