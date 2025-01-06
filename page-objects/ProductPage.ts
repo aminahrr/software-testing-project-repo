@@ -99,7 +99,7 @@ export class ProductPage extends AbstractPage{
     }
 
     // checks details of product
-    async assertCheckProductDetails(expectedTitle: string, expectedPrice: number): Promise<void> {
+    async assertCheckProductDetails(expectedTitle: string, expectedPrice: number,expectedDescription: string): Promise<void> {
       // Get the product title text and ensure it's not null before comparing
       const actualTitleText = await this.page.locator('.c-product__title').first().textContent();
       const actualTitle = actualTitleText?.trim() ?? "";
@@ -111,6 +111,12 @@ export class ProductPage extends AbstractPage{
       const normalizedPriceText = priceTextContent?.replace(/[^\d,]/g, '').replace(',', '.');
       const actualPrice = parseFloat(normalizedPriceText ?? "0");
       expect(actualPrice).toBe(expectedPrice);
+      //description
+      const actualDescriptionText = await this.page.locator('.entry-content').textContent();
+      const actualDescription = actualDescriptionText?.trim() ?? "";
+      expect(actualDescription).toContain(expectedDescription);
+
+
   }
 
     // This assertion check for the search parameter from HomePage.ts inside of the product title 
