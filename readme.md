@@ -67,11 +67,10 @@ This repository contains automated tests for the Pandica Petshop e-commerce plat
     Footer
     Invalid Login
     Navigation Bar
-
-#### Ideas for other tests:
-    (bug)checkout adress of city and postal code do not match
-    
-    
+    Product Category Details
+    Search Items
+    Product Page Details
+    Stock Management    
 
 ## Thank you
 

@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "tests:chrome": "playwright test --config=playwright.config.ts --project=Chromium",
+    "tests:firefox": "playwright test --config=playwright.config.ts --project=Firefox",
+    "tests:webkit": "playwright test --config=playwright.config.ts --project=Webkit",
+    "tests:smoke": "playwright test --config=smoke.config.ts --project=Chromium",
+    "tests:regression": "playwright test --config=regression.config.ts --project=Chromium"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
