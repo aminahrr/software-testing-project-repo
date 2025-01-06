@@ -14,7 +14,7 @@ export class WishlistPage extends AbstractPage {
 
   async assertProductTitleContainsWords(search: string) {
     const titleElements = this.productTitle();
-    await titleElements.first().waitFor({ state: 'visible' }); // Ensure elements are visible
+    await titleElements.waitFor({ state: 'visible' }); // Ensure elements are visible
 
     const searchWords = search.split(' ');
     let containsWord = false;

@@ -24,7 +24,7 @@ test.describe('Adding Product to Wishlist', () => {
 
     await homePage.searchItem("Cat Nip"); // Enters the search query and proceeds
     await productPage.addToWishlistFirst(); // Adds first item to the wishlist
-    await page.waitForTimeout(300); // Waits for 500 milliseconds (GitHub test fix)
+    await page.waitForTimeout(1000); // Waits for 500 milliseconds (GitHub test fix)
     await productPage.openWishlist(); // Opens the wishlist page
     await wishlistPage.assertProductTitleContainsWords("Cat Nip"); // Checks if the previously added item is on the wishlist page
   });
