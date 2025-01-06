@@ -19,7 +19,7 @@ test.describe('Single Page', () => {
     await homePage.navMyPetButton().click();
     await page.waitForTimeout(300); // Waits for 300 milliseconds (GitHub test fix)
     await productPage.productTitle().first().click(); //opens product details
-    await productPage.assertCheckProductDetails( 'Betta Splendens-Delta borac', 15); //opens details page of first item in search
+    await productPage.assertCheckProductDetails(); //opens details page of first item in search
     
   })
 

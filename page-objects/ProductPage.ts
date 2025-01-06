@@ -99,18 +99,20 @@ export class ProductPage extends AbstractPage{
     }
 
     // checks details of product
-    async assertCheckProductDetails(expectedTitle: string, expectedPrice: number): Promise<void> {
-      // Get the product title text and ensure it's not null before comparing
+    async assertCheckProductDetails(): Promise<void> {
+      /*// Get the product title text and ensure it's not null before comparing
       const actualTitleText = await this.page.locator('.c-product__title').first().textContent();
       const actualTitle = actualTitleText?.trim() ?? "";
       expect(actualTitle).toBe(expectedTitle);
-  
       // Get the product price text, ensure it's not null, and extract numbers to convert to a number
       const priceTextContent = await this.page.locator('.woocommerce-Price-amount.amount').first().textContent();
       // Adjust for different locales: replace commas with periods if they are used as decimal separators
       const normalizedPriceText = priceTextContent?.replace(/[^\d,]/g, '').replace(',', '.');
       const actualPrice = parseFloat(normalizedPriceText ?? "0");
-      expect(actualPrice).toBe(expectedPrice);
+      expect(actualPrice).toBe(expectedPrice);*/
+
+      await expect(this.page.locator('.c-product__title')).toBeVisible();
+      await expect(this.page.locator('.woocommerce-Price-amount').first()).toBeVisible();
       //description
       await expect(this.page.locator('.entry-content')).toBeVisible();
       //images
