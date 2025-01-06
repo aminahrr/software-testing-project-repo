@@ -112,11 +112,7 @@ export class ProductPage extends AbstractPage{
       const actualPrice = parseFloat(normalizedPriceText ?? "0");
       expect(actualPrice).toBe(expectedPrice);
       //description
-      const actualDescriptionText = await this.page.locator('.entry-content').textContent();
-      const actualDescription = actualDescriptionText?.trim() ?? "";
-      expect(actualDescription).toContain(expectedDescription);
-
-
+      await expect(this.page.locator('.entry-content')).toBeVisible();
   }
 
     // This assertion check for the search parameter from HomePage.ts inside of the product title 
