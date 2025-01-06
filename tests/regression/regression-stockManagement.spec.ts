@@ -19,7 +19,7 @@ test.describe('Stock Management Test', () => {
     await homePage.clickSubCategoryItem('Psi', 'Hrana za pse') // Opens the product page
     await productPage.productTitle().first().click(); //opens product details
     await productPage.increaseStockByCurrentPlusOne()
-    await productPage.assertStockNumberMatches()
+    await productPage.assertStockNumber()
   });
 
 });

@@ -228,8 +228,46 @@ export class ProductPage extends AbstractPage{
     /**
      * Asserts that the displayed stock number matches the expected stock number.
      */
-    async assertStockNumberMatches(): Promise<void> {
-      
+    async assertStockNumber(): Promise<number> {
+      const stockText = await this.singleProductPageStock().textContent();
+      if (!stockText) {
+        throw new Error('Stock text is empty');
       }
+      // Extract the number from the stock string
+      return parseInt(stockText.match(/\d+/)?.[0] || '0', 10);
+    }
+  
+    // Click the increase stock button a specified number of times
+    async clickIncreaseStock(times: number): Promise<void> {
+      for (let i = 0; i < times; i++) {
+        await this.increaseStock().click();
+      }
+    }
+  
+    // Get the updated stock number after clicks
+    async getCurrentStockAdded(): Promise<number> {
+      const addedStockText = await this.currentStockAdded().innerText();
+      return Number(addedStockText);
+    }
+  
+    // Assert stock management system functionality
+    async assertStockManagement(): Promise<void> {
+      // Get the initial stock number
+      const initialStock = await this.getStockNumber();
+  
+      // Calculate the number of clicks needed
+      const timesToClick = initialStock + 1;
+  
+      // Perform the clicks
+      await this.clickIncreaseStock(timesToClick);
+  
+      // Get the updated stock number
+      const updatedStock = await this.getCurrentStockAdded();
+  
+      // Perform the assertion
+      if (updatedStock !== timesToClick) {
+        throw new Error(`Stock management failed. Expected: ${timesToClick}, Found: ${updatedStock}`);
+      }
+    }
   } 
 
