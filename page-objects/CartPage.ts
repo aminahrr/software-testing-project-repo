@@ -55,6 +55,7 @@ export class CartPage extends AbstractPage {
       throw new Error(`Total mismatch: Expected ${expectedTotal.toFixed(2)} KM, but got ${displayedTotal.toFixed(2)} KM`);
     }
   }
+  
 //NOTE : Sometimes it doesnt work, usually does
   async assertProductTitleContainsWords(search: string) {
     await this.page.waitForTimeout(300); // Waits for 300 milliseconds (GitHub test fix)

@@ -23,8 +23,9 @@ export class ProductPage extends AbstractPage{
     productFilterSidebar = () => this.page.locator('#js-shop-sidebar') // Product filter sidebar locator
     productPhoto = () => this.page.locator('.c-product-grid__thumb--cover') // Product photo locator
     productPagination = () => this.page.getByLabel('Product Pagination') // Product Pagination locator
-    productName = (productName: string) => this.page.locator(`.c-product-title:has-text("${productName}")`); 
-    productPrice = (productPrice: string) => this.page.locator('.woocommerce-Price-amount.amount');
+    productName = (productName: string) => this.page.locator(`.c-product-title:has-text("${productName}")`); // Specific product name locator
+    productName2 = () => this.page.locator('.c-product__title'); // Universal product name locator
+    productPrice = () => this.page.locator('.woocommerce-Price-amount.amount'); 
 
     // Actions 
 
@@ -97,17 +98,20 @@ export class ProductPage extends AbstractPage{
       expect(Categorytitle).toContain(title);
     }
 
-    // checks details of produc
-    public async assertCheckProductDetails(title,expectedPrice){
-      //title check
-      const ProductTitle = await this.productName(title);
-      expect(ProductTitle).toContainText(title);
-      //price check
-      const ProductPrice = await this.productPrice(price).first();
-      expect(ProductPrice).toContainText(expectedPrice);
-      //
-
-    }
+    // checks details of product
+    async assertCheckProductDetails(expectedTitle: string, expectedPrice: number): Promise<void> {
+      // Get the product title text and ensure it's not null before comparing
+      const actualTitleText = await this.page.locator('.c-product__title').first().textContent();
+      const actualTitle = actualTitleText?.trim() ?? "";
+      expect(actualTitle).toBe(expectedTitle);
+  
+      // Get the product price text, ensure it's not null, and extract numbers to convert to a number
+      const priceTextContent = await this.page.locator('.woocommerce-Price-amount.amount').first().textContent();
+      // Adjust for different locales: replace commas with periods if they are used as decimal separators
+      const normalizedPriceText = priceTextContent?.replace(/[^\d,]/g, '').replace(',', '.');
+      const actualPrice = parseFloat(normalizedPriceText ?? "0");
+      expect(actualPrice).toBe(expectedPrice);
+  }
 
     // This assertion check for the search parameter from HomePage.ts inside of the product title 
     async assertProductTitleContainsWords(search: string) {
