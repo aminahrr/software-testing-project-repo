@@ -26,7 +26,7 @@ test.describe('Product Page Test', () => {
     await productPage.assertOrdering() // Checks if the ordering filter option present
     await productPage.assertNumberOfItems() // Checks if the number of items is present
     await productPage.assertCategoryTitle() // Checks if the category title is present
-    await productPage.assertProductCard() // Checks if the product photo is present
+    await productPage.assertProductCard() // Checks if the product card is present
     
     
   })
