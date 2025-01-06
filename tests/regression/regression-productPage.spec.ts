@@ -20,15 +20,15 @@ test.describe('Product Page Test', () => {
   test('Checking if product page element are present', async ({page}) => {
 
     await homePage.clickSubCategoryItem('Psi', 'Hrana za pse') // Opens the product page
-    await productPage.assertCheckPagination() // Checks if the pagination is present
-    await productPage.assertCheckProductPhoto() // Checks if the product photo is present
-    await productPage.assertCheckFilterSidebar() // Checks if the filter sidebar is present
-    await productPage.assertCheckOrdering() // Checks if the ordering filter option present
-    await productPage.assertCheckNumberOfItems() // Checks if the number of items is present
-    await productPage.assertCheckCategoryTitle() // Checks if the category title is present
-    await productPage.assertCheckProductCard() // Checks if the product photo is present
+    await productPage.assertPagination() // Checks if the pagination is present
+    await productPage.assertProductPhoto() // Checks if the product photo is present
+    await productPage.assertFilterSidebar() // Checks if the filter sidebar is present
+    await productPage.assertOrdering() // Checks if the ordering filter option present
+    await productPage.assertNumberOfItems() // Checks if the number of items is present
+    await productPage.assertCategoryTitle() // Checks if the category title is present
+    await productPage.assertProductCard() // Checks if the product photo is present
     
-
+    
   })
 
 })

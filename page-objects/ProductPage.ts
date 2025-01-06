@@ -195,9 +195,34 @@ export class ProductPage extends AbstractPage{
       await this.productPagination().isVisible();
     }
 
-    // Assertion checks if the pagination is visible
-    public async assert(){
-      await this.productPagination().isVisible();
+    // Assertion checks if the product photo is visible
+    public async assertProductPhoto(){
+      await this.productPhoto().first().isVisible();
+    }
+
+    // Assertion checks if the filter sidebar is visible
+    public async assertFilterSidebar(){
+      await this.productFilterSidebar().isVisible();
+    }
+
+    // Assertion checks if the product ordering is visible
+    public async assertOrdering(){
+      await this.productOrdering().isVisible();
+    }
+
+    // Assertion checks if the product ordering is visible
+    public async assertNumberOfItems(){
+      await this.numberOfItems().isVisible();
+    }
+
+    // Assertion checks if the category title is visible 
+    public async assertCategoryTitle(){
+      await this.categoryTitle().isVisible();
+    }
+
+    // Assertion checks if the category title is visible 
+    public async assertProductCard(){
+      await this.productCard2().first().isVisible();
     }
 
     /**
@@ -208,8 +233,6 @@ export class ProductPage extends AbstractPage{
   
       const currentStockInput = this.currentStockAdded(); // Ensure this is correctly pointing to your input field.
       await this.page.waitForSelector('.currentStockAdded', { state: 'attached' });
-  
-      
   
       const currentStockText = await currentStockInput.inputValue();
       console.log(`Retrieved stock value from input: '${currentStockText}'`);
