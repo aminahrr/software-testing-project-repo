@@ -205,17 +205,26 @@ export class ProductPage extends AbstractPage{
      */
     async assertStockNumberMatches(): Promise<void> {
       const expectedStockNumber = await this.getStockNumber();
-      const currentStockLocator = this.page.locator('.currentStockAdded'); // Adjust the locator to your actual element
-      const currentStockText = await currentStockLocator.textContent();
+  
+      const currentStockInput = this.currentStockAdded(); // Ensure this is correctly pointing to your input field.
+      await this.page.waitForSelector('.currentStockAdded', { state: 'attached' });
+  
       
-    // Handle potential null value for currentStockText
-    if (currentStockText === null) {
-      console.error("Failed to retrieve current stock text.");
-      throw new Error('Current stock text is null.');
-  }
-
-  const currentStockNumber = parseInt(currentStockText, 10);
-
+  
+      const currentStockText = await currentStockInput.inputValue();
+      console.log(`Retrieved stock value from input: '${currentStockText}'`);
+  
+      if (!currentStockText) {
+          console.error("No stock value retrieved or input is empty.");
+          throw new Error('Stock value is missing or empty.');
+      }
+  
+      const currentStockNumber = parseInt(currentStockText, 10);
+      if (isNaN(currentStockNumber)) {
+          console.error(`Parsing error: Unable to parse stock number from value '${currentStockText}'`);
+          throw new Error('Parsing error: Failed to parse current stock number.');
+      }
+  
       if (currentStockNumber !== expectedStockNumber) {
           console.error(`Stock numbers do not match: Expected ${expectedStockNumber}, but got ${currentStockNumber}`);
           throw new Error('Stock numbers do not match.');

@@ -17,8 +17,9 @@ test.describe('Stock Management Test', () => {
   test('Boundry scenario - testing stock management system', async ({ page }) => {
 
     await homePage.clickSubCategoryItem('Psi', 'Hrana za pse') // Opens the product page
-    await productPage.clickSubCategoryItem()
-
+    await productPage.productTitle().first().click(); //opens product details
+    await productPage.increaseStockByCurrentPlusOne()
+    await productPage.assertStockNumberMatches()
   });
 
 });
