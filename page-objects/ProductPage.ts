@@ -99,7 +99,7 @@ export class ProductPage extends AbstractPage{
     }
 
     // checks details of product
-    async assertCheckProductDetails(expectedTitle: string, expectedPrice: number,expectedDescription: string): Promise<void> {
+    async assertCheckProductDetails(expectedTitle: string, expectedPrice: number): Promise<void> {
       // Get the product title text and ensure it's not null before comparing
       const actualTitleText = await this.page.locator('.c-product__title').first().textContent();
       const actualTitle = actualTitleText?.trim() ?? "";
@@ -113,6 +113,21 @@ export class ProductPage extends AbstractPage{
       expect(actualPrice).toBe(expectedPrice);
       //description
       await expect(this.page.locator('.entry-content')).toBeVisible();
+      //images
+      await expect(this.page.locator('.c-product__slider-img')).toBeVisible();
+      //stock
+      await expect(this.page.locator('.stock')).toBeVisible();
+      //sku
+      await expect(this.page.locator('.sku').first()).toBeVisible();
+      //kategorija
+      await expect(this.page.locator('.posted_in')).toBeVisible();
+      // buttons
+      await expect(this.page.locator('.c-product__quantity')).toBeVisible();
+      await expect(this.page.locator('.single_add_to_cart_button')).toBeVisible();
+      await expect(this.page.locator('.c-product__wishlist')).toBeVisible();
+      await expect(this.page.locator('.c-product__atc-row-2')).toBeVisible();
+      await expect(this.page.locator('.c-post-share')).toBeVisible();
+
   }
 
     // This assertion check for the search parameter from HomePage.ts inside of the product title 
